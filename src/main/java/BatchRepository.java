@@ -4,7 +4,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/** A: persistence gateway, file batches.csv (id,ref,sku,quantity,status). */
+// A: persistence gateway, file batches.csv (id,ref,sku,quantity,status)
 public class BatchRepository {
     private final Path file;
 

@@ -18,7 +18,9 @@ public class AdminFacade {
 
     public void compensate(String chainId) {
         Chain chain = chains.find(chainId).orElseThrow(() -> new WarehouseException("Unknown chain " + chainId));
-        if (chain.getStatus() == Chain.Status.COMPENSATED) throw new WarehouseException(chainId + " is already compensated");
+        if (chain.getStatus() == Chain.Status.COMPENSATED) {
+            throw new WarehouseException(chainId + " is already compensated");
+        }
         facade.undo(chain);
     }
 

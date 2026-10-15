@@ -1,4 +1,4 @@
-/** A: a batch of goods reserved on the shelf for one order. */
+// A: a batch of goods reserved on the shelf for one order.
 public class Batch {
     public enum Status {
         NEW, RESERVED, RELEASED

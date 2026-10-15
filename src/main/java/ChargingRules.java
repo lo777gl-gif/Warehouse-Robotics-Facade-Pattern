@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Set;
 
-/** C: pure business rules. Chooses a free charging station. */
+// C: pure business rules. Chooses a free charging station.
 public class ChargingRules {
     public static final List<String> STATIONS = List.of("S1", "S2");
 

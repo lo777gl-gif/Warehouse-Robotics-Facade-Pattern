@@ -4,7 +4,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/** C: persistence gateway, files dispatches.csv (id,ref,robot,station,status) and dispatch.log. */
+// C: persistence gateway, files dispatches.csv (id,ref,robot,station,status) and dispatch.log
 public class DispatchRepository {
     private final Path file, logFile;
 
@@ -29,7 +29,7 @@ public class DispatchRepository {
         try { Files.write(file, lines); } catch (IOException e) { throw new UncheckedIOException(e); }
     }
 
-    /** The dispatch logger: appends one line to dispatch.log. */
+    // The dispatch logger: appends one line to dispatch.log
     public void log(String message) {
         try {
             Files.writeString(logFile, message + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);

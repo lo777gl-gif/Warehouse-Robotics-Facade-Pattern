@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/** B: gives an order to a free robot and frees the robot again. */
+// B: gives an order to a free robot and frees the robot again
 public class RobotNavigator {
     private final TaskRepository repo;
     private final RoutePlanner planner = new RoutePlanner();

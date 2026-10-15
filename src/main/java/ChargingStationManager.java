@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/** C: docks the robot on a free charging station, logs the dispatch, and can cancel it. */
+// C: docks the robot on a free charging station, logs the dispatch, and can cancel it
 public class ChargingStationManager {
     private final DispatchRepository repo;
     private final ChargingRules rules = new ChargingRules();
