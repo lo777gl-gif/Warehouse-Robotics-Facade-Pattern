@@ -1,3 +1,10 @@
+package facade;
+
+import charging.ChargingStationManager;
+import exception.WarehouseException;
+import reserve.OrderBatcher;
+import robot.RobotNavigator;
+
 import java.util.List;
 
 // Facade 2: for the operator. Shows what is saved in all three subsystems and compensates a chain by hand

@@ -1,3 +1,7 @@
+package reserve;
+
+import exception.WarehouseException;
+
 import java.util.List;
 import java.util.Optional;
 

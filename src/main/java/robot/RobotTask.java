@@ -1,3 +1,5 @@
+package robot;
+
 // B: one robot assigned to carry one order to the conveyor.
 public class RobotTask {
     public enum Status {

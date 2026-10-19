@@ -1,3 +1,5 @@
+package charging;
+
 // C: a robot docked on a charging station and the dispatch confirmed.
 public class Dispatch {
     public enum Status { NEW, CONFIRMED, CANCELLED }

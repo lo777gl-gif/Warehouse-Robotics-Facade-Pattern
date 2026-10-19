@@ -1,6 +1,14 @@
-
+package facade;
 // Facade 1: the client's one call. fulfil() runs A (reserve) -> B (robot) -> C (charging + dispatch)
 // Saves progress after each step, and rolls back in reverse order if a step fails.
+
+import charging.ChargingStationManager;
+import charging.Dispatch;
+import reserve.Batch;
+import reserve.OrderBatcher;
+import robot.RobotNavigator;
+import robot.RobotTask;
+import exception.WarehouseException;
 
 public class WarehouseFacade {
     private final OrderBatcher batcher;
@@ -60,7 +68,7 @@ public class WarehouseFacade {
             return chain;
         } catch (WarehouseException e) {
             undo(chain);
-            throw new WarehouseException("Chain " + chain.getId() + " rolled back: " + e.getMessage());
+            throw new WarehouseException("facade.Chain " + chain.getId() + " rolled back: " + e.getMessage());
         }
     }
 

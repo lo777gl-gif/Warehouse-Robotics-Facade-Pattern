@@ -1,3 +1,18 @@
+import charging.ChargingStationManager;
+import charging.Dispatch;
+import charging.DispatchRepository;
+import facade.AdminFacade;
+import facade.Chain;
+import facade.ChainRepository;
+import facade.WarehouseFacade;
+import reserve.Batch;
+import reserve.BatchRepository;
+import reserve.OrderBatcher;
+import robot.RobotNavigator;
+import robot.RobotTask;
+import robot.TaskRepository;
+import exception.WarehouseException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
@@ -29,7 +44,7 @@ public class Scenario {
         return this;
     }
 
-    // ----- actions -----
+    // actions
     public Scenario order(String sku, int quantity) {
         assertEquals(Chain.Status.COMPLETED, facade.fulfil(sku, quantity).getStatus());
         return this;
@@ -40,7 +55,7 @@ public class Scenario {
         return this;
     }
 
-    // ----- checks -----
+    // checks
     public Scenario thenChain(String chainId, Chain.Status expected) {
         assertEquals(expected, chains.find(chainId).orElseThrow().getStatus());
         return this;

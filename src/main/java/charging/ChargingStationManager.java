@@ -1,7 +1,10 @@
+package charging;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import exception.WarehouseException;
 
 // C: docks the robot on a free charging station, logs the dispatch, and can cancel it
 public class ChargingStationManager {

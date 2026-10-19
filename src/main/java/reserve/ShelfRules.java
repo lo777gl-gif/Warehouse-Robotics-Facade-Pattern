@@ -1,6 +1,10 @@
+package reserve;
+
+import exception.WarehouseException;
+
 // A: pure business rules. No files, no state. */
 public class ShelfRules {
-    public static final int STOCK_PER_SKU = 100;   // every SKU has 100 items on the shelf
+    public static final int STOCK_PER_SKU = 100;
 
     // Throws if the order is invalid or the shelf cannot cover it
     public void check(String sku, int quantity, int alreadyReserved) {

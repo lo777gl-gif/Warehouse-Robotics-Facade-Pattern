@@ -1,28 +1,26 @@
+package reserve;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// B: persistence gateway, file tasks.csv (id,ref,robot,status)
-public class TaskRepository {
+// A: persistence gateway, file batches.csv (id,ref,sku,quantity,status)
+public class BatchRepository {
     private final Path file;
 
-    public TaskRepository(Path dir) {
-        try {
-            Files.createDirectories(dir);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-        file = dir.resolve("tasks.csv");
+    public BatchRepository(Path dir) {
+        try { Files.createDirectories(dir); } catch (IOException e) { throw new UncheckedIOException(e); }
+        file = dir.resolve("batches.csv");
     }
 
-    public List<RobotTask> loadAll() {
-        List<RobotTask> result = new ArrayList<>();
+    public List<Batch> loadAll() {
+        List<Batch> result = new ArrayList<>();
         try {
             if (Files.exists(file))
                 for (String line : Files.readAllLines(file)) {
-                    result.add(RobotTask.fromCsv(line));
+                    result.add(Batch.fromCsv(line));
                 }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -30,10 +28,10 @@ public class TaskRepository {
         return result;
     }
 
-    public void saveAll(List<RobotTask> tasks) {
+    public void saveAll(List<Batch> batches) {
         List<String> lines = new ArrayList<>();
-        for (RobotTask t : tasks) {
-            lines.add(t.toCsv());
+        for (Batch b : batches) {
+            lines.add(b.toCsv());
         }
         try {
             Files.write(file, lines);

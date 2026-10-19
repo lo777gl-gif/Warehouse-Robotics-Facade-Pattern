@@ -3,8 +3,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import charging.ChargingStationManager;
+import charging.Dispatch;
+import charging.DispatchRepository;
+import exception.WarehouseException;
+import facade.Chain;
+import facade.ChainRepository;
+import facade.WarehouseFacade;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+import reserve.Batch;
+import reserve.BatchRepository;
+import reserve.OrderBatcher;
+import robot.RobotNavigator;
+import robot.RobotTask;
+import robot.TaskRepository;
 
 class WarehouseFacadeTest {
     @TempDir Path dir;

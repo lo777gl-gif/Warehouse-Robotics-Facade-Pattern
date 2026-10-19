@@ -8,23 +8,23 @@ Classes
 
 A (Order Batcher / Shelf)
 
-`OrderBatcher`, `Batch`, `ShelfRules`, `BatchRepository`
+`reserve.OrderBatcher`, `reserve.Batch`, `reserve.ShelfRules`, `reserve.BatchRepository`
 
 B (Robot Navigator)
 
-`RobotNavigator`, `RobotTask`, `RoutePlanner`, `TaskRepository`
+`robot.RobotNavigator`, `robot.RobotTask`, `robot.RoutePlanner`, `robot.TaskRepository`
 
-C (Charging / Dispatch log)
+C (Charging / charging.Dispatch log)
 
-`ChargingStationManager`, `Dispatch`, `ChargingRules`, `DispatchRepository`
+`charging.ChargingStationManager`, `charging.Dispatch`, `charging.ChargingRules`, `charging.DispatchRepository`
 
 Facades
 
-`WarehouseFacade` (order, recover, undo), `AdminFacade` (report, manual compensation)
+`facade.WarehouseFacade` (order, recover, undo), `facade.AdminFacade` (report, manual compensation)
 
 Other
 
-`Chain` + `ChainRepository` (saved progress), `WarehouseException`, `Main`
+`facade.Chain` + `facade.ChainRepository` (saved progress), `WarehouseException`, `Main`
 
 UML: `img/uml.png`. ![UML diagram](img/uml.png)
 
@@ -40,32 +40,47 @@ Rules: every SKU has 100 units on the shelf, a robot carries at most 40, there a
 
 ## How progress is saved
 
-`Chain.status` is saved after each step: `PENDING_B` -> `PENDING_C` -> `COMPLETED` (or `COMPENSATING` -> `COMPENSATED`). On start, `recover()` reads the chains from disk and continues the interrupted ones. When undoing, the facade looks at what each subsystem has really saved (Dispatch CONFIRMED, RobotTask ASSIGNED, Batch RESERVED) and undoes only that, in the order C, B, A.
+`facade.Chain.status` is saved after each step: `PENDING_B` -> `PENDING_C` -> `COMPLETED` (or `COMPENSATING` -> `COMPENSATED`). On start, `recover()` reads the chains from disk and continues the interrupted ones. When undoing, the facade looks at what each subsystem has really saved (charging.Dispatch CONFIRMED, robot.RobotTask ASSIGNED, reserve.Batch RESERVED) and undoes only that, in the order C, B, A.
 
 ## Least Knowledge: before / after
 
 Before: the client must know A, B and C, the order, how data goes from B to C, and write the undo itself.
 
 ```java
+import reserve.Batch;
+import robot.RobotTask;
+
 Batch batch = batcher.reserve(id, sku, qty);
-try {
-    RobotTask task = navigator.assign(id, qty);
-    try {
-        charging.confirm(id, task.getRobotId());
-    } catch (WarehouseException e) {
-        navigator.release(task.getId());
-        batcher.release(batch.getId());
+try{
+RobotTask task = navigator.assign(id, qty);
+    try{
+            charging.
+
+confirm(id, task.getRobotId());
+        }catch(
+WarehouseException e){
+        navigator.
+
+release(task.getId());
+        batcher.
+
+release(batch.getId());
         throw e;
     }
-} catch (WarehouseException e) {
-    batcher.release(batch.getId());
-    throw e;
+            }catch(
+WarehouseException e){
+        batcher.
+
+release(batch.getId());
+        throw e;
 }
 ```
 
 After: one call, one friend.
 
 ```java
+import facade.Chain;
+
 Chain chain = facade.fulfil(sku, qty);   // on failure: WarehouseException, already rolled back
 ```
 
@@ -75,4 +90,4 @@ An Adapter makes one existing class fit an interface that the client already exp
 
 ## Tests
 
-28 JUnit 5 tests. `Scenario` is the small test language (`warehouse.order("BOX", 10).orderFails("BOX", 60).thenChain("CH-2", COMPENSATED)`). They cover each subsystem alone, both undo cases, the undo order, three restart cases and the admin facade. Line coverage is about 99% (JaCoCo, without `Main`).
+28 JUnit 5 tests. `Scenario` is the small test language (`exception.order("BOX", 10).orderFails("BOX", 60).thenChain("CH-2", COMPENSATED)`). They cover each subsystem alone, both undo cases, the undo order, three restart cases and the admin facade. Line coverage is about 99% (JaCoCo, without `Main`).

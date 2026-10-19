@@ -1,3 +1,7 @@
+package robot;
+
+import exception.WarehouseException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;

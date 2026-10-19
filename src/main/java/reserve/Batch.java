@@ -1,3 +1,5 @@
+package reserve;
+
 // A: a batch of goods reserved on the shelf for one order.
 public class Batch {
     public enum Status {
@@ -19,12 +21,15 @@ public class Batch {
     public void reserve() {
         change(Status.NEW, Status.RESERVED);
     }
+
     public void release() {
         change(Status.RESERVED, Status.RELEASED);
     }
 
     private void change(Status from, Status to) {
-        if (status != from) throw new IllegalStateException(id + ": cannot go " + status + " -> " + to);
+        if (status != from) {
+            throw new IllegalStateException(id + ": cannot go " + status + " -> " + to);
+        }
         status = to;
     }
 

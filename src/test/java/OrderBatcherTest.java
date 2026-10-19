@@ -1,15 +1,23 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
+
+import exception.WarehouseException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+import reserve.Batch;
+import reserve.BatchRepository;
+import reserve.OrderBatcher;
 
-/** Subsystem A on its own. */
+// Subsystem A on its own
 class OrderBatcherTest {
     @TempDir Path dir;
     OrderBatcher batcher;
 
-    @BeforeEach void setUp() { batcher = new OrderBatcher(new BatchRepository(dir)); }
+    @BeforeEach
+    void setUp() {
+        batcher = new OrderBatcher(new BatchRepository(dir));
+    }
 
     @Test void reserveTakesGoodsFromTheShelf() {
         Batch b = batcher.reserve("X-1", "BOX", 30);

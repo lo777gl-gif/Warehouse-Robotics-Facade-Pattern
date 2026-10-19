@@ -1,3 +1,5 @@
+package facade;
+
 // Saved progress of one order going through A -> B -> C.
 public class Chain {
     public enum Status {

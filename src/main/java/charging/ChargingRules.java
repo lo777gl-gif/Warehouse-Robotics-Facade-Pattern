@@ -1,5 +1,8 @@
+package charging;
+
 import java.util.List;
 import java.util.Set;
+import exception.WarehouseException;
 
 // C: pure business rules. Chooses a free charging station.
 public class ChargingRules {
