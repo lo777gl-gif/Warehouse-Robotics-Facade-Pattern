@@ -11,7 +11,11 @@ public class DispatchRepository {
     private final Path file, logFile;
 
     public DispatchRepository(Path dir) {
-        try { Files.createDirectories(dir); } catch (IOException e) { throw new UncheckedIOException(e); }
+        try {
+            Files.createDirectories(dir);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
         file = dir.resolve("dispatches.csv");
         logFile = dir.resolve("dispatch.log");
     }
@@ -20,15 +24,21 @@ public class DispatchRepository {
         List<Dispatch> result = new ArrayList<>();
         try {
             if (Files.exists(file))
-                for (String line : Files.readAllLines(file)) result.add(Dispatch.fromCsv(line));
+                for (String line : Files.readAllLines(file)) {
+                    result.add(Dispatch.fromCsv(line));
+                }
         } catch (IOException e) { throw new UncheckedIOException(e); }
         return result;
     }
 
     public void saveAll(List<Dispatch> dispatches) {
         List<String> lines = new ArrayList<>();
-        for (Dispatch d : dispatches) lines.add(d.toCsv());
-        try { Files.write(file, lines); } catch (IOException e) { throw new UncheckedIOException(e); }
+        for (Dispatch d : dispatches) {
+            lines.add(d.toCsv());
+        }
+        try {
+            Files.write(file, lines);
+        } catch (IOException e) { throw new UncheckedIOException(e); }
     }
 
     // The dispatch logger: appends one line to dispatch.log
@@ -39,7 +49,9 @@ public class DispatchRepository {
     }
 
     public List<String> readLog() {
-        try { return Files.exists(logFile) ? Files.readAllLines(logFile) : List.of(); }
+        try {
+            return Files.exists(logFile) ? Files.readAllLines(logFile) : List.of();
+        }
         catch (IOException e) { throw new UncheckedIOException(e); }
     }
 }

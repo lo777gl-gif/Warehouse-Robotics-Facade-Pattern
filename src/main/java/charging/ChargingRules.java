@@ -10,7 +10,9 @@ public class ChargingRules {
 
     public String chooseStation(Set<String> busyStations) {
         for (String station : STATIONS)
-            if (!busyStations.contains(station)) return station;
+            if (!busyStations.contains(station)) {
+                return station;
+            }
         throw new WarehouseException("No free charging station");
     }
 }

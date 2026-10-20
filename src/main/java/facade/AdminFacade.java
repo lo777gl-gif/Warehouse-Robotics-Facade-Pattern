@@ -41,8 +41,7 @@ public class AdminFacade {
             sb.append("(no orders yet)\n");
         }
         for (Chain c : all) {
-            sb.append(c.getId()).append(" ").append(c.getSku()).append(" x").append(c.getQuantity())
-              .append("  ").append(c.getStatus()).append("\n");
+            sb.append(c.getId()).append(" ").append(c.getSku()).append(" x").append(c.getQuantity()).append("  ").append(c.getStatus()).append("\n");
             sb.append("   A: ").append(batcher.find(c.getBatchId()).map(b -> b.getStatus().toString()).orElse("-")).append("\n");
             sb.append("   B: ").append(navigator.findByRef(c.getId()).map(t -> t.getStatus() + " " + t.getRobotId()).orElse("-")).append("\n");
             sb.append("   C: ").append(charging.findByRef(c.getId()).map(d -> d.getStatus() + " " + d.getStation()).orElse("-")).append("\n");

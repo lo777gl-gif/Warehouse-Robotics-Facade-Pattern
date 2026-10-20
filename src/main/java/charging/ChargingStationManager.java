@@ -11,7 +11,9 @@ public class ChargingStationManager {
     private final DispatchRepository repo;
     private final ChargingRules rules = new ChargingRules();
 
-    public ChargingStationManager(DispatchRepository repo) { this.repo = repo; }
+    public ChargingStationManager(DispatchRepository repo) {
+        this.repo = repo;
+    }
 
     public Dispatch confirm(String ref, String robotId) {
         List<Dispatch> all = repo.loadAll();
@@ -47,8 +49,11 @@ public class ChargingStationManager {
 
     private Set<String> busy(List<Dispatch> all) {
         Set<String> busy = new HashSet<>();
-        for (Dispatch d : all)
-            if (d.getStatus() == Dispatch.Status.CONFIRMED) busy.add(d.getStation());
-        return busy;
+        for (Dispatch d : all) {
+            if (d.getStatus() == Dispatch.Status.CONFIRMED) {
+                busy.add(d.getStation());
+            }
+        }
+        return busy; // if here is no any busy stations it will return empty Set
     }
 }
